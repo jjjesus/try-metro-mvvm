@@ -1,0 +1,49 @@
+﻿<Controls:MetroWindow
+    x:Class="StockMarket.GUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"      
+    mc:Ignorable="d"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:StockMarket="clr-namespace:StockMarket.GUI" 
+    xmlns:Views="clr-namespace:StockMarket.GUI.Views"
+    xmlns:ViewModels="clr-namespace:StockMarket.GUI.ViewModels"
+    Title="Stock Market Demo"
+    Height="490"
+    Width="660"
+    Icon="Stocks.ico"
+    ShowIconOnTitleBar="true"
+    d:DataContext="{d:DesignInstance ViewModels:MainWindowViewModel}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Icons/MergedResources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Controls:MetroContentControl>
+        <Grid>
+            <TabControl>
+                <TabItem Header="_Fx Rates">
+                    <StackPanel Margin="25,10">
+                        <Views:FxRatesWindow />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="_Settings">
+                    <StackPanel Margin="25,10">
+                        <Views:SettingsWindow />
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Controls:MetroContentControl>
+</Controls:MetroWindow>

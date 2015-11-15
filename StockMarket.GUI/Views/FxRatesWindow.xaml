@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="StockMarket.GUI.Views.FxRatesWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:StockMarket="clr-namespace:StockMarket.GUI" 
+             xmlns:ViewModels="clr-namespace:StockMarket.GUI.ViewModels"
+             xmlns:Assets="clr-namespace:StockMarket.GUI.Assets"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:Converters="clr-namespace:StockMarket.GUI.Converters" 
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="350"
+             d:DataContext="{d:DesignInstance ViewModels:FxRatesWindowViewModel}">
+ 
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="280" />
+            <RowDefinition Height="180" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Converters:BoolToServiceRunningTextConverter x:Key="BoolToServiceRunningTextConverter" />
+            <Converters:BoolToSubscribedTextConverter x:Key="BoolToSubscribedTextConverter" />
+            <Converters:CcyFromIconConverter x:Key="CcyFromIconConverter" />
+            <Converters:CcyToDisplayNameConverter x:Key="CcyToDisplayNameConverter" />            
+            <Converters:CcyToIconConverter x:Key="CcyToIconConverter" />
+            <Converters:DeltaToIconConverter x:Key="DeltaToIconConverter" />
+            <Converters:AbsoluteNumberConverter x:Key="AbsoluteNumberConverter" />
+            <Converters:DateTimeToTimeConverter x:Key="DateTimeToTimeConverter" />
+        </Grid.Resources>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button x:Name="btnServiceRunning"
+              Width="100"
+              Height="30"
+              HorizontalAlignment="Left" 
+              Content="{Binding ServiceRunning, Converter={StaticResource BoolToServiceRunningTextConverter}}" 
+              Command="{Binding ServiceRunningCommand, Mode=TwoWay}"
+              Margin="5,0,0,0"/>
+            <Button x:Name="btnSubscribe"
+              Width="100"
+              Height="30"
+              Margin="10,0,0,0"
+              HorizontalAlignment="Left" 
+              Content="{Binding Subscribed, Converter={StaticResource BoolToSubscribedTextConverter}}" 
+              Command="{Binding SubscriptionCommand, Mode=TwoWay}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="Currency" Width="170" Margin="5,0,0,0" />
+            <TextBlock Text="Bid" Width="100" />
+            <TextBlock Text="Offer" Width="100" />
+            <TextBlock Text="Change" Width="105" />
+            <TextBlock Text="Spread" Width="100" />
+        </StackPanel>
+        <ListBox x:Name="lbFxRates" 
+             ItemsSource="{Binding Path=DisplayFxRates}" 
+             BorderThickness="0" FontFamily="Segoe UI"
+             Grid.Row="2"
+             SelectedItem="{Binding SelectedRate}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="25">
+                        <Image Source="{Binding Ccy, Converter={StaticResource CcyFromIconConverter}}" Width="20" />
+                        <TextBlock Text="{Binding Ccy, Converter={StaticResource CcyToDisplayNameConverter}}" Width="85" FontSize="15" Margin="10,0,0,0"/>
+                        <Image Source="{Binding Ccy, Converter={StaticResource CcyToIconConverter}}" Width="20" Margin="10,0,27,0"/>
+                        <TextBlock Text="{Binding Bid}" Width="100" FontSize="15" />
+                        <TextBlock Text="{Binding Offer}" Width="100" FontSize="15" />
+                        <Image Source="{Binding Delta, Converter={StaticResource DeltaToIconConverter}}" Width="20" />
+                        <TextBlock Text="{Binding Delta, Converter={StaticResource AbsoluteNumberConverter}}" Width="85" FontSize="15" />
+                        <TextBlock Text="{Binding Spread}" Width="100" HorizontalAlignment="Right" FontSize="15" />
+                        <!--<TextBlock Text="{Binding Timestamp, Converter={StaticResource DateTimeToTimeConverter}}" Width="100" FontSize="15" />-->
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
